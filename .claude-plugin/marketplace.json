@@ -1,7 +1,7 @@
 {
-  "name": "openai-codex",
+  "name": "941design-codex",
   "owner": {
-    "name": "OpenAI"
+    "name": "941design"
   },
   "metadata": {
     "description": "Codex plugins to use in Claude Code for delegation and code review.",

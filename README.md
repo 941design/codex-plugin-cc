@@ -1,5 +1,7 @@
 # Codex plugin for Claude Code
 
+> **Fork notice.** This is a 941design fork of [openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc). The fork removes `disable-model-invocation: true` from `/codex:review` and `/codex:adversarial-review` so subagents and the main model can invoke them via the `Skill` tool — required for multi-agent workflows (e.g. 941design/base's `feature.md`) that use Codex review as a quality gate. Other operational commands (`status`, `result`, `cancel`) are unchanged.
+
 Use Codex from inside Claude Code for code reviews or to delegate tasks to Codex.
 
 This plugin is for Claude Code users who want an easy way to start using Codex from the workflow
@@ -24,13 +26,13 @@ they already have.
 Add the marketplace in Claude Code:
 
 ```bash
-/plugin marketplace add openai/codex-plugin-cc
+/plugin marketplace add 941design/codex-plugin-cc
 ```
 
 Install the plugin:
 
 ```bash
-/plugin install codex@openai-codex
+/plugin install codex@941design-codex
 ```
 
 Reload plugins:
