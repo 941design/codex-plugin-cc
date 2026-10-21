@@ -40,6 +40,32 @@ test("resolveStateDir uses CLAUDE_PLUGIN_DATA when it is provided", () => {
   }
 });
 
+test("resolveStateDir prefers CODEX_COMPANION_PLUGIN_DATA over CLAUDE_PLUGIN_DATA", () => {
+  const workspace = makeTempDir();
+  const companionDataDir = makeTempDir();
+  const foreignDataDir = makeTempDir();
+  const previous = {
+    CODEX_COMPANION_PLUGIN_DATA: process.env.CODEX_COMPANION_PLUGIN_DATA,
+    CLAUDE_PLUGIN_DATA: process.env.CLAUDE_PLUGIN_DATA
+  };
+  process.env.CODEX_COMPANION_PLUGIN_DATA = companionDataDir;
+  process.env.CLAUDE_PLUGIN_DATA = foreignDataDir;
+
+  try {
+    const stateDir = resolveStateDir(workspace);
+
+    assert.equal(stateDir.startsWith(path.join(companionDataDir, "state")), true);
+  } finally {
+    for (const [name, value] of Object.entries(previous)) {
+      if (value == null) {
+        delete process.env[name];
+      } else {
+        process.env[name] = value;
+      }
+    }
+  }
+});
+
 test("saveState prunes dropped job artifacts when indexed jobs exceed the cap", () => {
   const workspace = makeTempDir();
   const stateFile = resolveStateFile(workspace);
